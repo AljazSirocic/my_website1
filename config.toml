@@ -98,10 +98,10 @@ disqusShortname = ""
       url = "projects"
 
     [[params.tiles.showcase]]
-      title = "General cocial survey"
+      title = "General social survey"
       subtitle = "Analysis of social media use"
       image = "pic02.jpg"
-      url = "blogs/tempus"
+      url = "projects/project2"
 
     [[params.tiles.showcase]]
       title = "Returns of financial stocks"
@@ -138,14 +138,10 @@ disqusShortname = ""
   # Section Type Two
   [params.two]
     enable = true
-    title = "Massa libero"
-    subtitle = """Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. 
-    Mauris aliquet magna magna sed nunc rhoncus pharetra. 
-    Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. 
-    Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero.
-    Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus."""
-    buttonText = "Get Started"
-    url = "blogs"
+    title = "Character is destiny"
+    subtitle = """Welcome to my website! I am Aljaz, coming from Slovenia. My website provides you with various interesting analyses and content, which can on one hand give you a greater understanding of the things you already know or help you to tackle undiscovered areas. I hope you will enjoy it."""
+    #buttonText = "Get Started"
+    #url = "blogs"
 
 
   # Contact section
