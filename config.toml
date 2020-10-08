@@ -107,13 +107,13 @@ disqusShortname = ""
       title = "Returns of financial stocks"
       subtitle = "Financial markets insights"
       image = "pic03.jpg"
-      url = "blogs/magna"
+      url = "projects/project3"
 
     [[params.tiles.showcase]]
       title = "The country where people drink the most _____ is?"
       subtitle = "Find the ranking of your country"
       image = "pic04.jpg"
-      url = "blogs/ipsum"
+      url = "projects/project4"
 
     #[[params.tiles.showcase]]
      # title = "Consequat"

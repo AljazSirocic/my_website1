@@ -73,7 +73,15 @@
   </url>
   
   <url>
+    <loc>/projects/project1/</loc>
+  </url>
+  
+  <url>
     <loc>/projects/project2/</loc>
+  </url>
+  
+  <url>
+    <loc>/projects/project4/</loc>
   </url>
   
   <url>
