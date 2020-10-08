@@ -92,10 +92,10 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "Weather"
-      subtitle = "hmmm"
+      title = "Climate change and temperature anomalies"
+      subtitle = "Climate Change a Hoax?"
       image = "pic01.jpg"
-      url = "blogs/aliquam"
+      url = "projects/Prj1"
 
     [[params.tiles.showcase]]
       title = "Tempus"
