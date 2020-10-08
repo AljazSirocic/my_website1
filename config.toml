@@ -93,13 +93,13 @@ disqusShortname = ""
     
     [[params.tiles.showcase]]
       title = "Climate change and temperature anomalies"
-      subtitle = "Climate Change a Hoax?"
+      subtitle = "Climate Change a Hoax"
       image = "pic01.jpg"
-      url = "projects/Prj1"
+      url = "projects/Prj1/Climate Change"
 
     [[params.tiles.showcase]]
-      title = "Tempus"
-      subtitle = "Feugiat Amet Tempus"
+      title = "General Social Survey"
+      subtitle = "Analysis of social media use"
       image = "pic02.jpg"
       url = "blogs/tempus"
 
