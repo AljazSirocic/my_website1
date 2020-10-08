@@ -93,25 +93,25 @@ disqusShortname = ""
     
     [[params.tiles.showcase]]
       title = "Climate change and temperature anomalies"
-      subtitle = "Climate Change a Hoax"
+      subtitle = "Climate Change a Hoax?"
       image = "pic01.jpg"
       url = "projects"
 
     [[params.tiles.showcase]]
-      title = "General Social Survey"
+      title = "General cocial survey"
       subtitle = "Analysis of social media use"
       image = "pic02.jpg"
       url = "blogs/tempus"
 
     [[params.tiles.showcase]]
-      title = "Magna"
-      subtitle = "Lorem Etiam Nullam"
+      title = "Returns of financial stocks"
+      subtitle = "Financial markets insights"
       image = "pic03.jpg"
       url = "blogs/magna"
 
     [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
+      title = "The country where people drink the most _____ is?"
+      subtitle = "Find the ranking of your country"
       image = "pic04.jpg"
       url = "blogs/ipsum"
 
