@@ -1,5 +1,5 @@
 # Site settings
-baseURL = "https://aljaz2021.netlify.app/"
+baseURL = "https://aljaz2020.netlify.app/"
 languageCode = "en-us"
 title = "Aljaz"
 theme = "forty"
