@@ -20,7 +20,7 @@ disqusShortname = ""
 
   # Provide your metadata here.
   name = "ALjaz"
-  description = "Hi! My name is Aljaz and I want to share with you few R projects"
+  description = "Aljaz's portfolio"
 
   # Link custom assets relative to /static
   custom_css = []
