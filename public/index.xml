@@ -35,6 +35,17 @@
     </item>
     
     <item>
+      <title>Climate change and temperature anomalies</title>
+      <link>/blogs/climate-change-and-temperature-anomalies/</link>
+      <pubDate>Tue, 31 Oct 2017 21:28:43 -0500</pubDate>
+      
+      <guid>/blogs/climate-change-and-temperature-anomalies/</guid>
+      <description>Climate change and temperature anomalies We want to study climate change and find our data on the Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies in the Northern Hemisphere at NASA’s Goddard Institute for Space Studies. The tabular data of temperature anomalies can be found here
+For this particular data set, NASA clearly states that the base period is the period between 1951-1980.
+We run the code below to load the file:</description>
+    </item>
+    
+    <item>
       <title>Ipsum</title>
       <link>/blogs/ipsum/</link>
       <pubDate>Tue, 31 Oct 2017 21:28:43 -0500</pubDate>
@@ -56,37 +67,19 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     
     <item>
       <title></title>
+      <link>/blogs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>/projects/project1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/projects/project1/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/projects/project2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/project2/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/projects/project3/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/project3/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/projects/project4/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/project4/</guid>
       <description></description>
     </item>
     
