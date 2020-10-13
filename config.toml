@@ -53,7 +53,7 @@ disqusShortname = ""
 
     [[params.navigation.links]]
       name = "Climate change and temperature anomalies"
-      url = "blogs/blog5"
+      url = "blogs/blog5.html"
 
     #[[params.navigation.links]]
       #name = "Elements"
@@ -95,8 +95,8 @@ disqusShortname = ""
       title = "Climate change and temperature anomalies"
       subtitle = "Climate Change a Hoax?"
       image = "pic01.jpg"
-      url = "projects/project1"
-
+      url = "blogs/blog5.html"
+      
     [[params.tiles.showcase]]
       title = "General social survey"
       subtitle = "Analysis of social media use"
