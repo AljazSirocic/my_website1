@@ -53,7 +53,7 @@ disqusShortname = ""
 
     [[params.navigation.links]]
       name = "Climate change and temperature anomalies"
-      url = "blogs/blog5"
+      url = "blogs/blog5.rmd"
 
     #[[params.navigation.links]]
       #name = "Elements"
