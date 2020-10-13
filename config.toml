@@ -95,7 +95,7 @@ disqusShortname = ""
       title = "Climate change and temperature anomalies"
       subtitle = "Climate Change a Hoax?"
       image = "pic01.jpg"
-      url = "blogs/blog5"
+      url = "blogs/blog5.rmd"
       
     [[params.tiles.showcase]]
       title = "General social survey"
