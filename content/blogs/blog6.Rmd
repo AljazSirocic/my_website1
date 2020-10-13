@@ -267,5 +267,3 @@ The confidence interval for the mean email usage in the population is between 6h
 4. Would you expect a 99% confidence interval to be wider or narrower than the interval you calculated above? Explain your reasoning.
 
 If we were to increase the confidence level of the interval to 99%, then the range of the interval would increase. Increasing the confidence will increase the margin of error resulting in a wider interval. In general, the greater the confidence level, the greater the range between the high and low points in a confidence interval.
-
-
