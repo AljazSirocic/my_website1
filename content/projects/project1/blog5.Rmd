@@ -10,7 +10,6 @@ image: pic01.jpg
 keywords: ""
 slug: Climate change and temperature anomalies 
 title: Climate change and temperature anomalies
-blogdown:::blogdown_site
 ---
 
 
