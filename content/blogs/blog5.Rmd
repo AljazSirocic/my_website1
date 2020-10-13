@@ -6,9 +6,9 @@ categories:
 date: "2017-10-31T21:28:43-05:00"
 description: ""
 draft: false
-image: pic01.jpg
+image: pic07.jpg
 keywords: ""
-slug: Climate change and temperature anomalies 
+slug: blog5
 title: Climate change and temperature anomalies
 ---
 
@@ -43,9 +43,6 @@ library(readxl)
 library(vroom)
 library(infer)
 ```
-
-
-# Climate change and temperature anomalies 
 
 
 We want to study climate change and find our data on the *Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies* in the Northern Hemisphere at [NASA's Goddard Institute for Space Studies](https://data.giss.nasa.gov/gistemp). The [tabular data of temperature anomalies can be found here](https://data.giss.nasa.gov/gistemp/tabledata_v3/NH.Ts+dSST.txt)
