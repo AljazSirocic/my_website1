@@ -1,4 +1,17 @@
 
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T21:28:43-05:00"
+description: ""
+draft: false
+image: pic10.jpg
+keywords: ""
+slug: Climate change and temperature anomalies 
+title: Ipsum
+---
+
 
 ```{r, setup, include=FALSE}
 knitr::opts_chunk$set(
@@ -30,7 +43,6 @@ library(readxl)
 library(vroom)
 library(infer)
 ```
-
 
 
 # Climate change and temperature anomalies 
@@ -245,4 +257,7 @@ The two methods yielded almost the same result: the 95% confidence interval for 
 > What is the data showing us? Please type your answer after (and outside!) this blockquote. You have to explain what you have done, and the interpretation of the result. One paragraph max, please!
 
 The data definitely tells us that the earth has been warming at an unprecedented rate over the last decade. The warming of global climate is now unequivocal. With the analysis of the data set we showed that our planet has been getting warmer for decades. Only over the last decade the temperature increased by around 1 degrees celsius, which can have significant consequences over the next years such as extreme events, including heat waves on land and in the ocean, record rainfall and flooding, massive fires and heat-charged hurricanes.
+
+
+
 
