@@ -66,18 +66,6 @@ glimpse(drinks) ## Rows: 193 ## Columns: 5 ## $ country &amp;lt;chr&amp;gt; &amp
     </item>
     
     <item>
-      <title>Climate change and temperature anomalies</title>
-      <link>/blogs/blog5/</link>
-      <pubDate>Tue, 31 Oct 2017 21:28:43 -0500</pubDate>
-      
-      <guid>/blogs/blog5/</guid>
-      <description>We want to study climate change and find our data on the Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies in the Northern Hemisphere at NASA’s Goddard Institute for Space Studies. The tabular data of temperature anomalies can be found here
-For this particular data set, NASA clearly states that the base period is the period between 1951-1980.
-We run the code below to load the file:
-weather &amp;lt;- read_csv(&amp;quot;https://data.</description>
-    </item>
-    
-    <item>
       <title>Ipsum</title>
       <link>/blogs/ipsum/</link>
       <pubDate>Tue, 31 Oct 2017 21:28:43 -0500</pubDate>
@@ -104,6 +92,18 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       
       <guid>/blogs/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>Climate change and temperature anomalies</title>
+      <link>/blogs/blog5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/blog5/</guid>
+      <description>We want to study climate change and find our data on the Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies in the Northern Hemisphere at NASA’s Goddard Institute for Space Studies. The tabular data of temperature anomalies can be found here
+For this particular data set, NASA clearly states that the base period is the period between 1951-1980.
+We run the code below to load the file:
+weather &amp;lt;- read_csv(&amp;quot;https://data.</description>
     </item>
     
   </channel>
