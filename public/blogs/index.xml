@@ -18,6 +18,16 @@ In this assignment we analyze data from the 2016 GSS sample data, using it to es
     </item>
     
     <item>
+      <title>Returns of financial stocks</title>
+      <link>/blogs/blog7/</link>
+      <pubDate>Tue, 13 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/blog7/</guid>
+      <description>We will use the tidyquant package to download historical data of stock prices, calculate returns, and examine the distribution of returns.
+We must first identify which stocks we want to download data for, and for this we must know their ticker symbol; Apple is known as AAPL, Microsoft as MSFT, McDonald’s as MCD, etc. The file nyse.csv contains 508 stocks listed on the NYSE, their ticker symbol, name, the IPO (Initial Public Offering) year, and the sector and industry the company is in.</description>
+    </item>
+    
+    <item>
       <title>Aliquam</title>
       <link>/blogs/aliquam/</link>
       <pubDate>Tue, 31 Oct 2017 22:42:51 -0500</pubDate>

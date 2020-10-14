@@ -52,49 +52,25 @@ We must first identify which stocks we want to download data for, and for this w
 
 
 ```{r load_nyse_data, message=FALSE, warning=FALSE}
-
-#Let's first download the data
-
 nyse <- read_csv(here::here("data","nyse.csv"))
-
-
-#Print the data set
-glimpse(nyse)
 ```
 
 Based on this dataset, we created a table and a bar plot that shows the number of companies per sector, in descending order.
 
 ```{r companies_per_sector}
 
-#Creating new variable
-
 companies_per_sector <- nyse %>%
-  
-  #Group companies by sector
-  
   group_by(sector) %>%
-  
-  #Arrange in descending order from the sector with the most compnies to the one with the least
   arrange(desc(sector)) %>% 
     count(sort=TRUE)
   
-
-companies_per_sector
-
-#Let's do the column plot, for better visualization
-
+view(companies_per_sector)
 ggplot(companies_per_sector, aes(x = n, y =reorder(sector,n))) +
-  geom_bar(stat="identity", width=0.5, fill="#DD0000") +
-
-  #add the title and names of axis x and y
-  
-  labs(title = "The most companies are coming from the Finance sector",
+  geom_bar(stat="identity", width=0.5, fill="#DD0000",position = "dodge") +
+  labs(title = "Number of companies in each sectors",
        y = "Sector",
        x = "Number of companies per sector")+
-  
   scale_x_continuous(expand = c(0,0))+
-  
-  #add the theme
   theme(panel.background = element_rect(colour = "White")) + 
   theme_light() +
   NULL
@@ -106,7 +82,7 @@ ggplot(companies_per_sector, aes(x = n, y =reorder(sector,n))) +
 We find Finance, Consumer Services and Public Utilities to be the sectors with the largest number of companies in them.
 
 
-Next, we choose the [Dow Jones Industrial Aveareg (DJIA)](https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average) stocks and their ticker symbols and download some data. Besides the thirty stocks that make up the DJIA, we also add `SPY` which is an SP500 ETF (Exchange Traded Fund).
+Next, we chose the [Dow Jones Industrial Aveareg (DJIA)](https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average) stocks and their ticker symbols and download some data. Besides the thirty stocks that make up the DJIA, we also added `SPY` which is an SP500 ETF (Exchange Traded Fund).
 
 
 ```{r, tickers_from_wikipedia}
@@ -121,7 +97,6 @@ tables <- djia_url %>%
 
 # parse HTML tables into a dataframe called djia. 
 # Use purr::map() to create a list of all tables in URL
-
 djia <- map(tables, . %>% 
                html_table(fill=TRUE)%>% 
                clean_names())
@@ -159,8 +134,7 @@ myStocks <- tickers %>%
          to   = "2020-08-31") %>%
   group_by(symbol) 
 
-# examine the structure of the resulting data frame
-glimpse(myStocks)
+glimpse(myStocks) # examine the structure of the resulting data frame
 ```
 
 Financial performance analysis depend on returns; If I buy a stock today for 100 and I sell it tomorrow for 101.75, my one-day return, assuming no transaction costs, is 1.75%. So given the adjusted closing prices, our first step is to calculate daily and monthly returns.
@@ -196,7 +170,7 @@ myStocks_returns_annual <- myStocks %>%
                cols = c(nested.col))
 ```
 
-We create a dataframe and assign it to a new object, where we summarised monthly returns since 2017-01-01 for each of the stocks and `SPY`; min, max, median, mean, SD.
+We created a dataframe and assign it to a new object, where we summarised monthly returns since 2017-01-01 for each of the stocks and `SPY`; min, max, median, mean, SD.
 
 ```{r summarise_monthly_returns}
 
@@ -218,24 +192,13 @@ We created a new dataset, by grouping the data by symbol, filtering the relevant
 
 We plotted a density plot, using `geom_density()`, for each of the stocks
 ```{r density_monthly_returns}
-
-#Create a density plot
 ggplot(myStocks_returns_monthly, aes(x = monthly_returns)) +
   geom_density()+
-  
-  #add title and names of axis
   ggtitle("Distribution of monthly returns for each stock") +
   labs(x="Monthly Returns", y="Density") +
-  
-  #add average return line
   geom_vline(aes(xintercept=mean(monthly_returns)),
-            color="#DD0000", linetype="dashed", size=0.5) + 
-  
-  #we wanted to present density of each stock
-
-  facet_wrap(~symbol)+ 
-  
-  #theme of the density plots
+            color="#DD0000", linetype="dashed", size=0.5) + #added average return line
+  facet_wrap(~symbol)+ #we wanted to present density of each stock
   theme(panel.background = element_rect(colour = "White")) + 
   theme_light() +
   NULL
@@ -247,44 +210,27 @@ ggplot(myStocks_returns_monthly, aes(x = monthly_returns)) +
 The peaks of density plots help display where the returns are concentrated over the period. The riskiest plot is the stock which is the most volatile and vice versa. The stocks with large tails are CRM (Selesforce.com) and AAPL (Apple) and therefore the riskiest. The least risky stock, the one with the highest density, is KO (CocaCola).
 
 
-Finally, we produce a plot that shows the expected monthly return (mean) of a stock on the Y-axis and the risk (standard deviation) in the X-axis. We use `ggrepel::geom_text_repel()` to label each stock with its ticker symbol.
+Finally, we produced a plot that shows the expected monthly return (mean) of a stock on the Y-axis and the risk (standard deviation) in the X-axis. We used `ggrepel::geom_text_repel()` to label each stock with its ticker symbol.
 
 ```{r risk_return_plot}
-
-#first we create new variable mothly_summary
 monthly_summary <- myStocks_returns_monthly %>% 
-  
-  #group the data for performence of each stock
-  
   group_by(symbol) %>%
-  
-  #mean and standard deviation for the monthly returns of each stock
   summarize(mean_month=mean(monthly_returns),
             sd_month=sd(monthly_returns))
   
                            
-#create a plot
-monthly_summary %>%
 
-  # stocks without SPY
-filter(symbol != "SPY") %>% 
+monthly_summary %>%
+filter(symbol != "SPY") %>% # stocks without SPY
   ggplot(aes(x=sd_month, y = mean_month, label = symbol)) +
   geom_point(aes(color = symbol)) +
-  
-  #points on the plot are named with symbols
-  ggrepel::geom_text_repel() + 
-  
-  #title the plot and name axis
+  geom_smooth(method = lm, se = FALSE, color="#DD0000") + #correlation line 
+  ggrepel::geom_text_repel() + #points on the plot are named with symbols
   labs(title = 'Risk/Return of stocks', 
        x = 'Risk (standard deviation of monthly returns)', 
-       y ="Average monthly return")+ 
-  
-  #add theme
+       y ="Average monthly return") +
   theme(panel.background = element_rect(colour = "White")) + 
   theme_light() +
-  
-  #legend does not bring value to the plot
-  theme(legend.position = "none") +
   NULL
 
 cor_test(monthly_summary$sd_month, monthly_summary$mean_month)
