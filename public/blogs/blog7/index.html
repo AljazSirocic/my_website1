@@ -85,26 +85,72 @@
 
 <p>We will use the <code>tidyquant</code> package to download historical data of stock prices, calculate returns, and examine the distribution of returns.</p>
 <p>We must first identify which stocks we want to download data for, and for this we must know their ticker symbol; Apple is known as AAPL, Microsoft as MSFT, McDonald’s as MCD, etc. The file <code>nyse.csv</code> contains 508 stocks listed on the NYSE, their ticker <code>symbol</code>, <code>name</code>, the IPO (Initial Public Offering) year, and the sector and industry the company is in.</p>
-<pre class="r"><code>nyse &lt;- read_csv(here::here(&quot;data&quot;,&quot;nyse.csv&quot;))</code></pre>
+<pre class="r"><code>#Let&#39;s first download the data
+
+nyse &lt;- read_csv(here::here(&quot;data&quot;,&quot;nyse.csv&quot;))
+
+
+#Print the data set
+glimpse(nyse)</code></pre>
+<pre><code>## Rows: 508
+## Columns: 6
+## $ symbol        &lt;chr&gt; &quot;MMM&quot;, &quot;ABB&quot;, &quot;ABT&quot;, &quot;ABBV&quot;, &quot;ACN&quot;, &quot;AAP&quot;, &quot;AFL&quot;, &quot;A&quot;, …
+## $ name          &lt;chr&gt; &quot;3M Company&quot;, &quot;ABB Ltd&quot;, &quot;Abbott Laboratories&quot;, &quot;AbbVie…
+## $ ipo_year      &lt;chr&gt; &quot;n/a&quot;, &quot;n/a&quot;, &quot;n/a&quot;, &quot;2012&quot;, &quot;2001&quot;, &quot;n/a&quot;, &quot;n/a&quot;, &quot;199…
+## $ sector        &lt;chr&gt; &quot;Health Care&quot;, &quot;Consumer Durables&quot;, &quot;Health Care&quot;, &quot;Hea…
+## $ industry      &lt;chr&gt; &quot;Medical/Dental Instruments&quot;, &quot;Electrical Products&quot;, &quot;M…
+## $ summary_quote &lt;chr&gt; &quot;https://www.nasdaq.com/symbol/mmm&quot;, &quot;https://www.nasda…</code></pre>
 <p>Based on this dataset, we created a table and a bar plot that shows the number of companies per sector, in descending order.</p>
-<pre class="r"><code>companies_per_sector &lt;- nyse %&gt;%
+<pre class="r"><code>#Creating new variable
+
+companies_per_sector &lt;- nyse %&gt;%
+  
+  #Group companies by sector
+  
   group_by(sector) %&gt;%
+  
+  #Arrange in descending order from the sector with the most compnies to the one with the least
   arrange(desc(sector)) %&gt;% 
     count(sort=TRUE)
   
-view(companies_per_sector)
+
+companies_per_sector</code></pre>
+<pre><code>## # A tibble: 12 x 2
+## # Groups:   sector [12]
+##    sector                    n
+##    &lt;chr&gt;                 &lt;int&gt;
+##  1 Finance                  97
+##  2 Consumer Services        79
+##  3 Public Utilities         60
+##  4 Capital Goods            45
+##  5 Health Care              45
+##  6 Energy                   42
+##  7 Technology               40
+##  8 Basic Industries         39
+##  9 Consumer Non-Durables    31
+## 10 Miscellaneous            12
+## 11 Transportation           10
+## 12 Consumer Durables         8</code></pre>
+<pre class="r"><code>#Let&#39;s do the column plot, for better visualization
+
 ggplot(companies_per_sector, aes(x = n, y =reorder(sector,n))) +
-  geom_bar(stat=&quot;identity&quot;, width=0.5, fill=&quot;#DD0000&quot;,position = &quot;dodge&quot;) +
-  labs(title = &quot;Number of companies in each sectors&quot;,
+  geom_bar(stat=&quot;identity&quot;, width=0.5, fill=&quot;#DD0000&quot;) +
+
+  #add the title and names of axis x and y
+  
+  labs(title = &quot;The most companies are coming from the Finance sector&quot;,
        y = &quot;Sector&quot;,
        x = &quot;Number of companies per sector&quot;)+
+  
   scale_x_continuous(expand = c(0,0))+
+  
+  #add the theme
   theme(panel.background = element_rect(colour = &quot;White&quot;)) + 
   theme_light() +
   NULL</code></pre>
 <p><img src="/blogs/blog7_files/figure-html/companies_per_sector-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p>We find Finance, Consumer Services and Public Utilities to be the sectors with the largest number of companies in them.</p>
-<p>Next, we chose the <a href="https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average">Dow Jones Industrial Aveareg (DJIA)</a> stocks and their ticker symbols and download some data. Besides the thirty stocks that make up the DJIA, we also added <code>SPY</code> which is an SP500 ETF (Exchange Traded Fund).</p>
+<p>Next, we choose the <a href="https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average">Dow Jones Industrial Aveareg (DJIA)</a> stocks and their ticker symbols and download some data. Besides the thirty stocks that make up the DJIA, we also add <code>SPY</code> which is an SP500 ETF (Exchange Traded Fund).</p>
 <pre class="r"><code>djia_url &lt;- &quot;https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average&quot;
 
 #get tables that exist on URL
@@ -115,6 +161,7 @@ tables &lt;- djia_url %&gt;%
 
 # parse HTML tables into a dataframe called djia. 
 # Use purr::map() to create a list of all tables in URL
+
 djia &lt;- map(tables, . %&gt;% 
                html_table(fill=TRUE)%&gt;% 
                clean_names())
@@ -146,7 +193,8 @@ myStocks &lt;- tickers %&gt;%
          to   = &quot;2020-08-31&quot;) %&gt;%
   group_by(symbol) 
 
-glimpse(myStocks) # examine the structure of the resulting data frame</code></pre>
+# examine the structure of the resulting data frame
+glimpse(myStocks)</code></pre>
 <pre><code>## Rows: 153,121
 ## Columns: 8
 ## Groups: symbol [31]
@@ -186,7 +234,7 @@ myStocks_returns_annual &lt;- myStocks %&gt;%
                type       = &quot;arithmetic&quot;,
                col_rename = &quot;yearly_returns&quot;,
                cols = c(nested.col))</code></pre>
-<p>We created a dataframe and assign it to a new object, where we summarised monthly returns since 2017-01-01 for each of the stocks and <code>SPY</code>; min, max, median, mean, SD.</p>
+<p>We create a dataframe and assign it to a new object, where we summarised monthly returns since 2017-01-01 for each of the stocks and <code>SPY</code>; min, max, median, mean, SD.</p>
 <pre class="r"><code>return_2017 &lt;- myStocks_returns_monthly %&gt;%
   group_by(symbol) %&gt;% 
   filter(date &gt;= as.Date(&quot;2017-01-01&quot;)) %&gt;% 
@@ -263,38 +311,64 @@ data.frame(return_2017)</code></pre>
 ## 31             11.74</code></pre>
 <p>We created a new dataset, by grouping the data by symbol, filtering the relevant periods and summarizing the respective min, max, median, mean and standard deviation of monthly returns.</p>
 <p>We plotted a density plot, using <code>geom_density()</code>, for each of the stocks</p>
-<pre class="r"><code>ggplot(myStocks_returns_monthly, aes(x = monthly_returns)) +
+<pre class="r"><code>#Create a density plot
+ggplot(myStocks_returns_monthly, aes(x = monthly_returns)) +
   geom_density()+
+  
+  #add title and names of axis
   ggtitle(&quot;Distribution of monthly returns for each stock&quot;) +
   labs(x=&quot;Monthly Returns&quot;, y=&quot;Density&quot;) +
+  
+  #add average return line
   geom_vline(aes(xintercept=mean(monthly_returns)),
-            color=&quot;#DD0000&quot;, linetype=&quot;dashed&quot;, size=0.5) + #added average return line
-  facet_wrap(~symbol)+ #we wanted to present density of each stock
+            color=&quot;#DD0000&quot;, linetype=&quot;dashed&quot;, size=0.5) + 
+  
+  #we wanted to present density of each stock
+
+  facet_wrap(~symbol)+ 
+  
+  #theme of the density plots
   theme(panel.background = element_rect(colour = &quot;White&quot;)) + 
   theme_light() +
   NULL</code></pre>
 <p><img src="/blogs/blog7_files/figure-html/density_monthly_returns-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p><em>What can you infer from this plot? Which stock is the riskiest? The least risky?"</em></p>
 <p>The peaks of density plots help display where the returns are concentrated over the period. The riskiest plot is the stock which is the most volatile and vice versa. The stocks with large tails are CRM (Selesforce.com) and AAPL (Apple) and therefore the riskiest. The least risky stock, the one with the highest density, is KO (CocaCola).</p>
-<p>Finally, we produced a plot that shows the expected monthly return (mean) of a stock on the Y-axis and the risk (standard deviation) in the X-axis. We used <code>ggrepel::geom_text_repel()</code> to label each stock with its ticker symbol.</p>
-<pre class="r"><code>monthly_summary &lt;- myStocks_returns_monthly %&gt;% 
+<p>Finally, we produce a plot that shows the expected monthly return (mean) of a stock on the Y-axis and the risk (standard deviation) in the X-axis. We use <code>ggrepel::geom_text_repel()</code> to label each stock with its ticker symbol.</p>
+<pre class="r"><code>#first we create new variable mothly_summary
+monthly_summary &lt;- myStocks_returns_monthly %&gt;% 
+  
+  #group the data for performence of each stock
+  
   group_by(symbol) %&gt;%
+  
+  #mean and standard deviation for the monthly returns of each stock
   summarize(mean_month=mean(monthly_returns),
             sd_month=sd(monthly_returns))
   
                            
-
+#create a plot
 monthly_summary %&gt;%
-filter(symbol != &quot;SPY&quot;) %&gt;% # stocks without SPY
+
+  # stocks without SPY
+filter(symbol != &quot;SPY&quot;) %&gt;% 
   ggplot(aes(x=sd_month, y = mean_month, label = symbol)) +
   geom_point(aes(color = symbol)) +
-  geom_smooth(method = lm, se = FALSE, color=&quot;#DD0000&quot;) + #correlation line 
-  ggrepel::geom_text_repel() + #points on the plot are named with symbols
+  
+  #points on the plot are named with symbols
+  ggrepel::geom_text_repel() + 
+  
+  #title the plot and name axis
   labs(title = &#39;Risk/Return of stocks&#39;, 
        x = &#39;Risk (standard deviation of monthly returns)&#39;, 
-       y =&quot;Average monthly return&quot;) +
+       y =&quot;Average monthly return&quot;)+ 
+  
+  #add theme
   theme(panel.background = element_rect(colour = &quot;White&quot;)) + 
   theme_light() +
+  
+  #legend does not bring value to the plot
+  theme(legend.position = &quot;none&quot;) +
   NULL</code></pre>
 <p><img src="/blogs/blog7_files/figure-html/risk_return_plot-1.png" width="648" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>cor_test(monthly_summary$sd_month, monthly_summary$mean_month)</code></pre>
