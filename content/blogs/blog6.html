@@ -15,6 +15,8 @@ title: General Social Survey
 
 <p>The <a href="http://www.gss.norc.org/">General Social Survey (GSS)</a> gathers data on American society in order to monitor and explain trends in attitudes, behaviours, and attributes. Many trends have been tracked for decades, so one can see the evolution of attitudes, etc in American Society.</p>
 <p>In this assignment we analyze data from the <strong>2016 GSS sample data</strong>, using it to estimate values of <em>population parameters</em> of interest about US adults. The GSS sample data file has 2867 observations of 935 variables, but we are only interested in very few of these variables and you are using a smaller file.</p>
+<p>##Overview</p>
+<p>We want to see how many people use each social media Platform but let us first look at the data</p>
 <pre class="r"><code>#Let&#39;s first read and change the data for the answers such as &quot;Don&#39;t know&quot;,&quot;No answer&quot;, &quot;Not applicable&quot;. We classified these kind of answers as &quot;NA&quot;
 
 gss &lt;- read_csv(here::here(&quot;data&quot;, &quot;smallgss2016.csv&quot;), 
@@ -30,7 +32,119 @@ glimpse(gss)</code></pre>
 ## $ twitter  &lt;chr&gt; &quot;NA&quot;, &quot;No&quot;, &quot;No&quot;, &quot;NA&quot;, &quot;No&quot;, &quot;No&quot;, &quot;NA&quot;, &quot;No&quot;, &quot;NA&quot;, &quot;No&quot;, …
 ## $ sex      &lt;chr&gt; &quot;Male&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Male&quot;…
 ## $ degree   &lt;chr&gt; &quot;Bachelor&quot;, &quot;High school&quot;, &quot;Bachelor&quot;, &quot;High school&quot;, &quot;Gradu…</code></pre>
-<p>We will be creating 95% confidence intervals for population parameters. The variables we have are the following:</p>
+<p>First we will check how many people use snapchat</p>
+<pre class="r"><code>#Calculate the proportions snapchat
+prop_snap &lt;- gss %&gt;%
+  filter(snapchat!=&quot;NA&quot;) %&gt;% 
+  group_by(snapchat) %&gt;% 
+  summarise(count = n()) %&gt;% 
+  mutate(prop_snap = count/sum(count)) 
+
+#Print the results
+prop_snap</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   snapchat count prop_snap
+##   &lt;chr&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 No        1061     0.773
+## 2 Yes        311     0.227</code></pre>
+<p>To visualize let us plot a histogram.</p>
+<pre class="r"><code># Plot the proportions
+plot_snap &lt;- prop_snap %&gt;%
+  ggplot(aes(
+    x = snapchat,
+    y = prop_snap)) +
+  
+  #choose the color of columns
+  geom_col(fill = &quot;red&quot;) + 
+  
+  #add the theme
+  theme_bw()+
+  
+    labs(
+    #Add the title
+    title = &quot;Around 23% people in the survey use Snapchat&quot;,
+    x = &quot;&quot;,
+    y = &quot;Proportion&quot;) +
+  NULL
+  
+plot_snap</code></pre>
+<p><img src="/blogs/blog6_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>Is the percentage higher for twitter?</p>
+<pre class="r"><code>#Calculate the proportions snapchat
+prop_twitter &lt;- gss %&gt;%
+  filter(twitter!=&quot;NA&quot;) %&gt;% 
+  group_by(twitter) %&gt;% 
+  summarise(count = n()) %&gt;% 
+  mutate(prop_twitter = count/sum(count)) 
+
+#Print the results
+prop_twitter</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   twitter count prop_twitter
+##   &lt;chr&gt;   &lt;int&gt;        &lt;dbl&gt;
+## 1 No       1117        0.814
+## 2 Yes       255        0.186</code></pre>
+<p>To visualize let us plot a histogram.</p>
+<pre class="r"><code>#Plot the calculated data
+plot_twitter &lt;- prop_twitter %&gt;%
+  ggplot(aes(
+    x = twitter,
+    y = prop_twitter)) +
+  
+  #choose the color of columns
+  geom_col(fill = &quot;red&quot;) +
+  
+  #add the theme
+  theme_bw()+
+  
+  #add the titles and name of axis
+  labs(
+    title = &quot;Even less people use Twitter - 19%&quot;,
+    x = &quot;&quot;,
+    y = &quot;Proportion&quot;) +
+  NULL
+
+plot_twitter</code></pre>
+<p><img src="/blogs/blog6_files/figure-html/unnamed-chunk-4-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>Finally, let’s check how many people use instagram.</p>
+<pre class="r"><code>#Calculate the proportions instagram
+prop_ig &lt;- gss %&gt;%
+  filter(instagrm!=&quot;NA&quot;) %&gt;% 
+  group_by(instagrm) %&gt;% 
+  summarise(count = n()) %&gt;% 
+  mutate(prop_ig = count/sum(count))
+
+#Print the results
+prop_ig</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   instagrm count prop_ig
+##   &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;
+## 1 No         949   0.692
+## 2 Yes        423   0.308</code></pre>
+<p>Let’s visualize our results with the help of histogram</p>
+<pre class="r"><code>#Plot
+# plot it with instagram colors
+plot_instagram &lt;- prop_ig %&gt;%
+  ggplot(aes(
+    x = instagrm,
+    y = prop_ig)) +
+  
+  #add the color of the columns
+  geom_col(fill = &quot;red&quot;) + 
+  
+  #to be consistant add the same theme
+  theme_bw() +
+
+  labs(
+    #add the title and name of axis
+    title = &quot;The favourite social platform is Instagram with around 31% people using it&quot;,
+    x = &quot;&quot;,
+    y = &quot;Proportion&quot;) +
+  NULL
+
+plot_instagram</code></pre>
+<p><img src="/blogs/blog6_files/figure-html/unnamed-chunk-6-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>Following will be creating 95% confidence intervals for population parameters. The variables we have are the following:</p>
 <ul>
 <li><p>hours and minutes spent on email weekly. The responses to these questions are recorded in the <code>emailhr</code> and <code>emailmin</code> variables. For example, if the response is 2.50 hours, this would be recorded as emailhr = 2 and emailmin = 30.</p></li>
 <li><p><code>snapchat</code>, <code>instagrm</code>, <code>twitter</code>: whether respondents used these social media in 2016</p></li>

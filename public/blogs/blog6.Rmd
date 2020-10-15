@@ -48,6 +48,10 @@ The [General Social Survey (GSS)](http://www.gss.norc.org/) gathers data on Amer
 In this assignment we analyze data from the **2016 GSS sample data**, using it to estimate values of *population parameters* of interest about US adults. The GSS sample data file has 2867 observations of 935 variables, but we are only interested in very few of these variables and you are using a smaller file.
 
 
+##Overview
+
+We want to see how many people use each social media Platform but let us first look at the data
+
 ```{r, read_gss_data, cache=TRUE}
 #Let's first read and change the data for the answers such as "Don't know","No answer", "Not applicable". We classified these kind of answers as "NA"
 
@@ -58,7 +62,126 @@ glimpse(gss)
 
 ```
 
-We will be creating 95% confidence intervals for population parameters. The variables we have are the following:
+First we will check how many people use snapchat
+
+```{r}
+#Calculate the proportions snapchat
+prop_snap <- gss %>%
+  filter(snapchat!="NA") %>% 
+  group_by(snapchat) %>% 
+  summarise(count = n()) %>% 
+  mutate(prop_snap = count/sum(count)) 
+
+#Print the results
+prop_snap
+
+```
+
+To visualize let us plot a histogram.
+
+```{r}
+# Plot the proportions
+plot_snap <- prop_snap %>%
+  ggplot(aes(
+    x = snapchat,
+    y = prop_snap)) +
+  
+  #choose the color of columns
+  geom_col(fill = "red") + 
+  
+  #add the theme
+  theme_bw()+
+  
+    labs(
+    #Add the title
+    title = "Around 23% people in the survey use Snapchat",
+    x = "",
+    y = "Proportion") +
+  NULL
+  
+plot_snap
+```
+
+Is the percentage higher for twitter?
+
+```{r}
+#Calculate the proportions snapchat
+prop_twitter <- gss %>%
+  filter(twitter!="NA") %>% 
+  group_by(twitter) %>% 
+  summarise(count = n()) %>% 
+  mutate(prop_twitter = count/sum(count)) 
+
+#Print the results
+prop_twitter
+```
+
+To visualize let us plot a histogram.
+
+```{r}
+#Plot the calculated data
+plot_twitter <- prop_twitter %>%
+  ggplot(aes(
+    x = twitter,
+    y = prop_twitter)) +
+  
+  #choose the color of columns
+  geom_col(fill = "red") +
+  
+  #add the theme
+  theme_bw()+
+  
+  #add the titles and name of axis
+  labs(
+    title = "Even less people use Twitter - 19%",
+    x = "",
+    y = "Proportion") +
+  NULL
+
+plot_twitter
+```
+
+Finally, let's check how many people use instagram.
+
+```{r}
+#Calculate the proportions instagram
+prop_ig <- gss %>%
+  filter(instagrm!="NA") %>% 
+  group_by(instagrm) %>% 
+  summarise(count = n()) %>% 
+  mutate(prop_ig = count/sum(count))
+
+#Print the results
+prop_ig
+```
+
+Let's visualize our results with the help of histogram
+
+```{r}
+#Plot
+# plot it with instagram colors
+plot_instagram <- prop_ig %>%
+  ggplot(aes(
+    x = instagrm,
+    y = prop_ig)) +
+  
+  #add the color of the columns
+  geom_col(fill = "red") + 
+  
+  #to be consistant add the same theme
+  theme_bw() +
+
+  labs(
+    #add the title and name of axis
+    title = "The favourite social platform is Instagram with around 31% people using it",
+    x = "",
+    y = "Proportion") +
+  NULL
+
+plot_instagram
+```
+
+Following will be creating 95% confidence intervals for population parameters. The variables we have are the following:
 
 - hours and minutes spent on email weekly. The responses to these questions are recorded in the `emailhr` and `emailmin` variables. For example, if the response is 2.50 hours, this would be recorded as emailhr = 2 and emailmin = 30.
 

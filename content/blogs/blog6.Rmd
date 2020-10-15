@@ -149,7 +149,7 @@ prop_ig <- gss %>%
   filter(instagrm!="NA") %>% 
   group_by(instagrm) %>% 
   summarise(count = n()) %>% 
-  mutate(prop_insta = count/sum(count))
+  mutate(prop_ig = count/sum(count))
 
 #Print the results
 prop_ig
@@ -160,10 +160,10 @@ Let's visualize our results with the help of histogram
 ```{r}
 #Plot
 # plot it with instagram colors
-plot_instagram <- prop_insta %>%
+plot_instagram <- prop_ig %>%
   ggplot(aes(
     x = instagrm,
-    y = prop_insta)) +
+    y = prop_ig)) +
   
   #add the color of the columns
   geom_col(fill = "red") + 
