@@ -6,7 +6,7 @@ date: "2020-10-13"
 description: ""
 draft: false
 image: pic09.jpg
-keywords: ""
+keywords: ""e
 slug: blog7
 title: Returns of financial stocks
 ---
@@ -200,15 +200,30 @@ We create a dataframe and assign it to a new object, where we summarised monthly
 
 ```{r summarise_monthly_returns}
 
+#Let's create a new variable
 return_2017 <- myStocks_returns_monthly %>%
-  group_by(symbol) %>% 
-  filter(date >= as.Date("2017-01-01")) %>% 
-  summarize(avg_returns=mean(monthly_returns)*100,
-            med_month_percent=median(monthly_returns)*100,
-            sd_month=sd(monthly_returns),
-            min_month_percent=min(monthly_returns)*100,
-            max_month_percent=max(monthly_returns)*100)
   
+  #Group the data for each company using function group_by
+  group_by(symbol) %>% 
+  
+  #Filter the data for the period from 01/01/2017
+  filter(date >= as.Date("2017-01-01")) %>% 
+  
+  #Summarize the data
+  summarize(avg_returns=mean(monthly_returns)*100,
+            
+            #Median of returns
+            med_month_percent=median(monthly_returns)*100,
+            
+            #Standard deviation of returns
+            sd_month=sd(monthly_returns),
+            
+            #Min monthly return
+            min_month_percent=min(monthly_returns)*100,
+            
+            #Max monthly return
+            max_month_percent=max(monthly_returns)*100)
+
 data.frame(return_2017)
 
 ```
