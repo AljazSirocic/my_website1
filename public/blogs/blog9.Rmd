@@ -51,7 +51,7 @@ For this particular data set, NASA clearly states that the base period is the pe
 We run the code below to load the file:
 
 ```{r weather_data, cache=TRUE}
-
+#Read the document 
 weather <- 
   read_csv("https://data.giss.nasa.gov/gistemp/tabledata_v3/NH.Ts+dSST.csv", 
            skip = 1, 
@@ -66,6 +66,7 @@ First, we selected the year and the twelve month variables from the `weather` da
 weather_1 <- weather %>% 
   select(c(Year, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec))
 
+#With help of the function glimpse we list down the data file
 glimpse(weather_1)
 
 ```
@@ -90,6 +91,8 @@ We plot the data using a time-series scatter plot, and added a trendline. We fir
 ```{r scatter_plot}
 
 tidyweather1 <- tidyweather %>%
+  
+  #With the function mutate we are changing the characteristics of the data and creating new variables
   mutate(date = ymd(paste(as.character(Year), month, "1")),
          month = month(date, label = TRUE),
          year = year(date))
@@ -98,8 +101,14 @@ tidyweather1 <- tidyweather %>%
 ggplot(tidyweather1, aes(x = date, y = delta, color = "#FF6347")) +
   geom_point() +
   geom_smooth(color = "dark blue")+
-  theme_bw() + 
+  
+  #Add the theme of the plot
+  theme_bw() +
+  
+  #Legend does not add value to the plot, therefore we exclude it
   theme(legend.position = "none") +
+  
+  #Add title and names and source to the axes,
   labs(title= "Temperature levels are on the rise",
        subtitle = "Annual temperature deviation relative to 1951-1980 base",
     caption="Source: NASA's Goddard Institute for Space Studies",
@@ -114,6 +123,8 @@ But now we are wondering, is the effect of increasing temperature more pronounce
 ```{r facet_wrap}
 
 tidyweather1 <- tidyweather %>%
+  
+  #With the function mutate we are changing the characteristics of the data and creating new variables
   mutate(date = ymd(paste(as.character(Year), month, "1")),
          month = month(date, label = TRUE),
          year = year(date))
@@ -122,8 +133,14 @@ ggplot(tidyweather1, aes(x = date, y = delta, colour = "#FF6347"))+
   geom_point()+
   geom_smooth(color="blue") +
   facet_wrap(~month) +
+  
+  #We add theme
   theme_bw() +
+  
+  #Legend does not add value to the plot, therefore we exclude it
   theme(legend.position = "none") +
+  
+  #Name axes and add title and source
   labs(
     title = "Temperature anomalies vary by month", 
     x= "Years",
@@ -141,7 +158,11 @@ We removed data before 1800 using `filter`. Then, we used the `mutate` function 
 ```{r intervals}
 
 comparison <- tidyweather %>% 
-  filter(Year>= 1881) %>%     #remove years prior to 1881
+  
+  #remove years prior to 1881
+  filter(Year>= 1881) %>% 
+  
+  
   #create new variable 'interval', and assign values based on criteria below:
   mutate(interval = case_when(
     Year %in% c(1881:1920) ~ "1881-1920",
@@ -174,16 +195,27 @@ So far, we have been working with monthly anomalies. However, we are also intere
 
 ```{r averaging}
 
-
+#We create new variable
 average_annual_anomaly <- tidyweather %>% 
+  
+  #we group the data by years
   group_by(Year) %>%
+  
+  #we calculate the averages of year increase. Exclude NAs from calculation
   summarise(annual_average_delta = mean(delta, na.rm=TRUE)) 
 
+#We have everything prepared, let's plot a chart
 ggplot(average_annual_anomaly, aes(x=Year, y= annual_average_delta, colour = "#FF6347"))+
   geom_point()+
   geom_smooth(color = "blue") +
+  
+  #add theme
   theme_bw() +
+  
+  #Legend does not add value, therefore we exclude it
   theme(legend.position = "none")  +
+  
+  #Add titles and name axes
   labs (
     title = "Yearly Temperatures Levels have been increasing significantly",
     subtitle= "Average Yearly Anomaly",
